@@ -17,11 +17,6 @@ class MigrateController extends BaseMigrateController
     public $migrationTable = 'migration';
 
     /**
-     * {@inheritdoc}
-     */
-    public $templateFile = __DIR__ . '/MigrationTemplates/MigrationTemplate.php';
-
-    /**
      * @var Manager
      */
     protected $db;
@@ -37,6 +32,7 @@ class MigrateController extends BaseMigrateController
     public function __construct($id, Module $module, Manager $capsule, $config = [])
     {
         $this->db = $capsule;
+        $this->templateFile = __DIR__ . '/MigrationTemplates/MigrationTemplate.php';
 
         parent::__construct($id, $module, $config);
     }
