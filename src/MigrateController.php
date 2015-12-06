@@ -3,6 +3,7 @@
 namespace leinonen\Yii2Eloquent;
 
 use Illuminate\Database\Capsule\Manager;
+use Illuminate\Database\Schema\Blueprint;
 use yii\base\Module;
 use yii\console\controllers\BaseMigrateController;
 use yii\helpers\ArrayHelper;
@@ -85,10 +86,7 @@ class MigrateController extends BaseMigrateController
         $tableName = $this->migrationTable;
         $this->stdout("Creating migration history table \"$tableName\"...", Console::FG_YELLOW);
 
-        $this->db->schema()->create($this->migrationTable, function ($table) {
-            /*
-             * @var $table \Illuminate\Database\Schema\Blueprint
-             */
+        $this->db->schema()->create($this->migrationTable, function (Blueprint $table) {
             $table->string('version', 180);
             $table->primary('version');
             $table->integer('apply_time');
