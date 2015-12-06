@@ -12,25 +12,54 @@ use yii\base\Component;
 
 class Yii2Eloquent extends Component implements BootstrapInterface
 {
-
+    /**
+     * @var string
+     */
     public $driver;
 
+    /**
+     * @var string
+     */
     public $host;
 
+    /**
+     * @var string
+     */
     public $database;
 
+    /**
+     * @var string
+     */
     public $username;
 
+    /**
+     * @var string
+     */
     public $password;
 
+    /**
+     * @var string
+     */
     public $charset;
 
+    /**
+     * @var string
+     */
     public $collation;
 
+    /**
+     * @var string
+     */
     public $prefix;
 
+    /**
+     * @var Manager
+     */
     private $capsule;
 
+    /**
+     * @inheritDoc
+     */
     public function bootstrap($app)
     {
         $this->capsule = new Manager();

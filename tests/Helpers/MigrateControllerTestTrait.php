@@ -5,6 +5,7 @@ namespace leinonen\Yii2Eloquent\Tests\Helpers;
 
 
 use Illuminate\Database\Capsule\Manager;
+use leinonen\Yii2Eloquent\MigrateController;
 use Yii;
 use yii\helpers\FileHelper;
 
@@ -13,6 +14,9 @@ trait MigrateControllerTestTrait
 
     use \yiiunit\framework\console\controllers\MigrateControllerTestTrait;
 
+    /**
+     * @inheritDoc
+     */
     public function setUpMigrationPath()
     {
         FileHelper::createDirectory($this->migrationPath);
@@ -23,6 +27,8 @@ trait MigrateControllerTestTrait
 
 
     /**
+     * {@inehritDoc}
+     * Overriden from parent to use Illuminate/database for querying
      * @return array applied migration entries
      */
     protected function getMigrationHistory()
@@ -42,6 +48,8 @@ trait MigrateControllerTestTrait
     }
 
     /**
+     * {@inehritDoc}
+     * Overriden from parent to change the template
      * @param string $name
      * @param string|null $date
      * @return string generated class name
@@ -74,6 +82,7 @@ CODE;
 
     /**
      * Creates test migrate controller instance.
+     * Overridden from parent to inject the CapsuleManager
      * @return MigrateController migrate command instance.
      */
     protected function createMigrateController()

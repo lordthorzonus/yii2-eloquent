@@ -87,6 +87,11 @@ class Yii2EloquentTest extends TestCase
 
         $model = Order::where('name', 'Test address')->firstOrFail();
         $this->assertEquals('Test address', $model->name);
+
+        Order::create(['name' => 'New name']);
+        $this->assertCount(3,Order::all());
+        $model = Order::where('name', 'New name')->firstOrFail();
+        $this->assertEquals('New name', $model->name);
     }
 
     /**

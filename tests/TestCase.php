@@ -21,7 +21,7 @@ abstract class TestCase extends \PHPUnit_Extensions_Database_TestCase
     }
 
     /**
-     * @return \PHPUnit_Extensions_Database_DB_IDatabaseConnection
+     * @inheritDoc
      */
     public function getConnection()
     {
@@ -34,13 +34,16 @@ abstract class TestCase extends \PHPUnit_Extensions_Database_TestCase
         return $this->createDefaultDBConnection($pdo, $db);
     }
 
+    /**
+     * @inheritDoc
+     */
     public function getDataSet()
     {
         return $this->createXMLDataSet(dirname(__FILE__)."/_files/schema.xml");
     }
 
     /**
-     * Mocks a Yii web application
+     * Mocks an Yii web application
      *
      * @param array $config
      * @param string $appClass
@@ -53,7 +56,7 @@ abstract class TestCase extends \PHPUnit_Extensions_Database_TestCase
             'vendorPath' => dirname(__DIR__) . '/vendor',
             'components' => [
                 'request' => [
-                    'cookieValidationKey' => 'iAmAnSecretKey',
+                    'cookieValidationKey' => 'iAmASecretKey',
                     'scriptFile' => __DIR__ .'/index.php',
                     'scriptUrl' => '/index.php',
                 ],
@@ -62,7 +65,7 @@ abstract class TestCase extends \PHPUnit_Extensions_Database_TestCase
     }
 
     /**
-     * Mocks a Yii console application
+     * Mocks an Yii console application
      * @param array $config
      * @param string $appClass
      */

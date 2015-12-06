@@ -43,7 +43,7 @@ class MigrateController extends BaseMigrateController
     }
 
     /**
-     * @inheritdoc
+     * {@inheritDoc}
      */
     public function options($actionID)
     {
