@@ -8,6 +8,8 @@ use yii\helpers\Inflector;
 
 class Model extends Eloquent
 {
+    use EloquentYiiModelAdapterTrait;
+
     /**
      * The name of the default scenario.
      */
@@ -25,6 +27,11 @@ class Model extends Eloquent
     const EVENT_AFTER_VALIDATE = 'afterValidate';
 
     /**
+     * @var DynamicModelAdapter
+     */
+    private $dummyModel;
+
+    /**
      * @see \yii\base\Model::rules()
      */
     public function rules()
@@ -38,36 +45,6 @@ class Model extends Eloquent
     public function scenarios()
     {
         return [];
-    }
-
-    /**
-     * Returns the form name that this model class should use.
-     *
-     * The form name is mainly used by [[\yii\widgets\ActiveForm]] to determine how to name
-     * the input fields for the attributes in a model. If the form name is "A" and an attribute
-     * name is "b", then the corresponding input name would be "A[b]". If the form name is
-     * an empty string, then the input name would be "b".
-     *
-     * By default, this method returns the model class name (without the namespace part)
-     * as the form name. You may override it when the model is used in different forms.
-     *
-     * @return string the form name of this model class.
-     */
-    public function formName()
-    {
-        $reflector = new ReflectionClass($this);
-
-        return $reflector->getShortName();
-    }
-
-    /**
-     * Returns the list of all attribute names of the record.
-     *
-     * @return array list of attribute names.
-     */
-    public function attributes()
-    {
-        return $this->getConnection()->getSchemaBuilder()->getColumnListing($this->getTable());
     }
 
     /**
@@ -112,34 +89,6 @@ class Model extends Eloquent
     }
 
     /**
-     * Returns the text label for the specified attribute.
-     * @param string $attribute the attribute name
-     * @return string the attribute label
-     * @see generateAttributeLabel()
-     * @see attributeLabels()
-     */
-    public function getAttributeLabel($attribute)
-    {
-        $labels = $this->attributeLabels();
-
-        return isset($labels[$attribute]) ? $labels[$attribute] : Inflector::camel2words($attribute, true);
-    }
-
-    /**
-     * Returns the text hint for the specified attribute.
-     * @param string $attribute the attribute name
-     * @return string the attribute hint
-     * @see attributeHints()
-     * @since 2.0.4
-     */
-    public function getAttributeHint($attribute)
-    {
-        $hints = $this->attributeHints();
-
-        return isset($hints[$attribute]) ? $hints[$attribute] : '';
-    }
-
-    /**
      * This method is invoked before validation starts.
      * The default implementation raises a `beforeValidate` event.
      * You may override this method to do preliminary checks before validation.
@@ -164,25 +113,43 @@ class Model extends Eloquent
     }
 
     /**
-     * Delecates the model validation to base yii objects.
-     * @see \yii\base\Model::validate()
-     * @param null $attributeNames
-     * @param bool|true $clearOnError
-     *
-     * @return bool
+     * Returns attribute values.
+     * @param array $names list of attributes whose value needs to be returned.
+     * Defaults to null, meaning all attributes listed in [[attributes()]] will be returned.
+     * If it is an array, only the attributes in the array will be returned.
+     * @param array $except list of attributes whose value should NOT be returned.
+     * @return array attribute values (name => value).
      */
-    public function validate($attributeNames = null, $clearOnError = true)
+    public function getAttributesForYiiModels($names = null, $except = [])
     {
-        $this->beforeValidate();
+        $values = [];
+        if ($names === null) {
+            $names = $this->attributes();
+        }
+        foreach ($names as $name) {
+            $values[$name] = $this->$name;
+        }
+        foreach ($except as $name) {
+            unset($values[$name]);
+        }
 
-        $properties = $this->getAttributes();
-        $dummyModel = new YiiDynamicBaseModelAdapter($properties);
+        return $values;
+    }
+
+    /**
+     * @return DynamicModelAdapter
+     */
+    protected function getDummyDynamicModel()
+    {
+        if($this->dummyModel != null){
+            return $this->dummyModel;
+        }
+
+        $properties = $this->getAttributesForYiiModels();
+        $dummyModel = new DynamicModelAdapter($properties);
         $dummyModel->setRules($this->rules());
         $dummyModel->setScenarios($this->scenarios());
-        $validation = $dummyModel->validate($attributeNames, $clearOnError);
 
-        $this->afterValidate();
-
-        return $validation;
+        return $dummyModel;
     }
 }

@@ -77,6 +77,9 @@ abstract class TestCase extends \PHPUnit_Extensions_Database_TestCase
                     'scriptUrl' => '/index.php',
                 ],
                 'db' => $this->databaseConfig,
+                'assetManager' => [
+                    'bundles' => false,
+                ],
             ],
         ], $config));
     }

@@ -2,9 +2,9 @@
 
 namespace leinonen\Yii2Eloquent\Eloquent;
 
-use yii\base\Model as YiiBaseModel;
+use yii\base\DynamicModel;
 
-class YiiDynamicBaseModelAdapter extends YiiBaseModel
+class DynamicModelAdapter extends DynamicModel
 {
     /**
      * @see YiiBaseModel::rules()
@@ -15,23 +15,6 @@ class YiiDynamicBaseModelAdapter extends YiiBaseModel
      * @see YiiBaseModel::scenarios()
      */
     protected $scenarios;
-
-    /**
-     * @var array the properties used by this model
-     */
-    protected $properties;
-
-    /**
-     * Initates a new YiiDynamicBaseModelAdapter.
-     *
-     * @param array $properties the properties this model consists of eq [ 'myProperty' => 'value ]
-     * @param array $config
-     */
-    public function __construct(array $properties, $config = [])
-    {
-        $this->properties = $properties;
-        parent::__construct($config);
-    }
 
     /**
      * @return array
@@ -77,24 +60,4 @@ class YiiDynamicBaseModelAdapter extends YiiBaseModel
         $this->scenarios = $scenarios;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function attributes()
-    {
-        return array_keys($this->properties);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function __get($name)
-    {
-        if (array_key_exists($name, $this->properties)) {
-            return $this->properties[ $name ];
-        }
-
-        return parent::__get($name);
-    }
 }
-
