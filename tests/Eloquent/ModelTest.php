@@ -25,7 +25,7 @@ class ModelTest extends TestCase
     }
     
     /** @test */
-    public function it_is_validatable_as_basic_yii_model_should_be()
+    public function it_validates_as_a_basic_yii_model_should()
     {
         $order = new Order();
        $this->assertFalse($order->validate());

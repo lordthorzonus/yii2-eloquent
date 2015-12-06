@@ -143,30 +143,6 @@ class Model extends Eloquent
     }
 
     /**
-     * Returns attribute values.
-     * @param array $names list of attributes whose value needs to be returned.
-     * Defaults to null, meaning all attributes listed in [[attributes()]] will be returned.
-     * If it is an array, only the attributes in the array will be returned.
-     * @param array $except list of attributes whose value should NOT be returned.
-     * @return array attribute values (name => value).
-     */
-    public function getAttributes($names = null, $except = [])
-    {
-        $values = [];
-        if ($names === null) {
-            $names = $this->attributes();
-        }
-        foreach ($names as $name) {
-            $values[$name] = $this->$name;
-        }
-        foreach ($except as $name) {
-            unset($values[$name]);
-        }
-
-        return $values;
-    }
-
-    /**
      * This method is invoked before validation starts.
      * The default implementation raises a `beforeValidate` event.
      * You may override this method to do preliminary checks before validation.
@@ -191,7 +167,7 @@ class Model extends Eloquent
     }
 
     /**
-     * Delecates the model validation to base yii objects
+     * Delecates the model validation to base yii object
      * @see \yii\base\Model::validate()
      * @param null $attributeNames
      * @param bool|true $clearOnError
