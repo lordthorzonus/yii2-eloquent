@@ -1,0 +1,34 @@
+{
+    "name": "leinonen/yii2-eloquent",
+    "description": "Drop in implementation of the Illuminate Database component for Yii2",
+    "type": "yii2-extension",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Juuso Leinonen",
+            "email": "leinonen.juuso@gmail.com"
+        }
+    ],
+    "require": {
+        "illuminate/database": "^5.1",
+        "illuminate/events": "^5.1",
+        "illuminate/pagination": "^5.1",
+        "yiisoft/yii2": "^2.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "4.8.*",
+        "phpunit/dbunit": "^2.0",
+        "vlucas/phpdotenv": "^2.1",
+        "yiisoft/yii2-dev": "^2.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "leinonen\\Yii2Eloquent\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "leinonen\\Yii2Eloquent\\Tests\\": "tests/"
+        }
+    }
+}
