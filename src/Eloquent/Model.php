@@ -1,18 +1,13 @@
 <?php
 
-
 namespace leinonen\Yii2Eloquent\Eloquent;
-
-
 
 use Illuminate\Database\Eloquent\Model as Eloquent;
 use ReflectionClass;
 use yii\helpers\Inflector;
 
-
 class Model extends Eloquent
 {
-
     /**
      * The name of the default scenario.
      */
@@ -126,6 +121,7 @@ class Model extends Eloquent
     public function getAttributeLabel($attribute)
     {
         $labels = $this->attributeLabels();
+
         return isset($labels[$attribute]) ? $labels[$attribute] : Inflector::camel2words($attribute, true);
     }
 
@@ -139,6 +135,7 @@ class Model extends Eloquent
     public function getAttributeHint($attribute)
     {
         $hints = $this->attributeHints();
+
         return isset($hints[$attribute]) ? $hints[$attribute] : '';
     }
 
@@ -171,7 +168,7 @@ class Model extends Eloquent
      * The default implementation raises a `beforeValidate` event.
      * You may override this method to do preliminary checks before validation.
      * Make sure the parent implementation is invoked so that the event can be raised.
-     * @return boolean whether the validation should be executed. Defaults to true.
+     * @return bool whether the validation should be executed. Defaults to true.
      * If false is returned, the validation will stop and the model is considered invalid.
      */
     public function beforeValidate()
@@ -191,7 +188,7 @@ class Model extends Eloquent
     }
 
     /**
-     * Delecates the model validation to base yii objects
+     * Delecates the model validation to base yii objects.
      * @see \yii\base\Model::validate()
      * @param null $attributeNames
      * @param bool|true $clearOnError
@@ -212,5 +209,4 @@ class Model extends Eloquent
 
         return $validation;
     }
-
 }

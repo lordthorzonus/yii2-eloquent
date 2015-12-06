@@ -1,14 +1,11 @@
 <?php
 
-
 namespace leinonen\Yii2Eloquent\Eloquent;
-
 
 use yii\base\Model as YiiBaseModel;
 
 class YiiDynamicBaseModelAdapter extends YiiBaseModel
 {
-
     /**
      * @see YiiBaseModel::rules()
      */
@@ -25,7 +22,7 @@ class YiiDynamicBaseModelAdapter extends YiiBaseModel
     protected $properties;
 
     /**
-     * Initates a new YiiDynamicBaseModelAdapter
+     * Initates a new YiiDynamicBaseModelAdapter.
      *
      * @param array $properties the properties this model consists of eq [ 'myProperty' => 'value ]
      * @param array $config
@@ -45,7 +42,7 @@ class YiiDynamicBaseModelAdapter extends YiiBaseModel
     }
 
     /**
-     * Sets the rules used for validation
+     * Sets the rules used for validation.
      *
      * @param array $rules
      */
@@ -61,7 +58,7 @@ class YiiDynamicBaseModelAdapter extends YiiBaseModel
     {
         $scenarios = parent::scenarios();
 
-        $definedScenarios =  $this->scenarios;
+        $definedScenarios = $this->scenarios;
 
         foreach ($definedScenarios as $definedScenarioName => $attributes) {
             $scenarios[$definedScenarioName] = $attributes;
@@ -71,7 +68,7 @@ class YiiDynamicBaseModelAdapter extends YiiBaseModel
     }
 
     /**
-     * Sets the scenarios for this model
+     * Sets the scenarios for this model.
      *
      * @param array $scenarios
      */
@@ -93,11 +90,10 @@ class YiiDynamicBaseModelAdapter extends YiiBaseModel
      */
     public function __get($name)
     {
-        if(array_key_exists($name, $this->properties)){
+        if (array_key_exists($name, $this->properties)) {
             return $this->properties[$name];
         }
 
         return parent::__get($name);
     }
-
 }
