@@ -4,7 +4,7 @@ namespace leinonen\Yii2Eloquent\Tests;
 
 use Exception;
 use Illuminate\Database\Capsule\Manager;
-use leinonen\Yii2Eloquent\Tests\TestModels\Order;
+use leinonen\Yii2Eloquent\Tests\Helpers\Order;
 use leinonen\Yii2Eloquent\Yii2Eloquent;
 use Yii;
 

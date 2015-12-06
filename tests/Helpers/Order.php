@@ -1,7 +1,7 @@
 <?php
 
 
-namespace leinonen\Yii2Eloquent\Tests\TestModels;
+namespace leinonen\Yii2Eloquent\Tests\Helpers;
 
 
 use Illuminate\Database\Eloquent\Model;
