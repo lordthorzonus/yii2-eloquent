@@ -95,7 +95,7 @@ abstract class TestCase extends \PHPUnit_Extensions_Database_TestCase
             'bootstrap' => ['db'],
             'components' => [
                 'db' => $this->databaseConfig,
-            ]
+            ],
         ], $config));
     }
 

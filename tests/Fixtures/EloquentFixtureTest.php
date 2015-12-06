@@ -1,8 +1,6 @@
 <?php
 
-
 namespace leinonen\Yii2Eloquent\Tests\Fixtures;
-
 
 use Illuminate\Database\Capsule\Manager;
 use Illuminate\Database\Schema\Blueprint;
@@ -28,7 +26,7 @@ class EloquentFixtureTest extends TestCase
         $this->mockWebApplication();
         $this->db = Yii::$app->db;
         $this->db->schema()->dropIfExists('order');
-        $this->db->schema()->create('order', function(Blueprint $table){
+        $this->db->schema()->create('order', function (Blueprint $table) {
             $table->increments('id');
             $table->string('address');
             $table->timestamps();
@@ -46,7 +44,7 @@ class EloquentFixtureTest extends TestCase
     public function fixtures()
     {
         return [
-            'order' => OrderFixture::class
+            'order' => OrderFixture::class,
         ];
     }
 
@@ -66,5 +64,4 @@ class EloquentFixtureTest extends TestCase
         $this->assertInstanceOf(Order::class, $order);
         $this->assertEquals('Test address', $order->address);
     }
-
 }

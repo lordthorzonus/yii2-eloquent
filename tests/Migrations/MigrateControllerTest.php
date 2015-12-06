@@ -6,7 +6,6 @@ use Illuminate\Database\Capsule\Manager;
 use leinonen\Yii2Eloquent\Tests\Helpers\BufferableMigrateController;
 use leinonen\Yii2Eloquent\Tests\Helpers\MigrateControllerTestTrait;
 use leinonen\Yii2Eloquent\Tests\TestCase;
-use leinonen\Yii2Eloquent\Yii2Eloquent;
 
 class MigrateControllerTest extends TestCase
 {

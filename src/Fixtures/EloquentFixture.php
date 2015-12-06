@@ -2,7 +2,6 @@
 
 namespace leinonen\Yii2Eloquent\Fixtures;
 
-
 use Illuminate\Database\Capsule\Manager;
 use Illuminate\Database\Eloquent\Model;
 use Yii;
@@ -30,7 +29,7 @@ class EloquentFixture extends Fixture implements \IteratorAggregate, \ArrayAcces
     public $data = [];
 
     /**
-     * @var string|boolean the file path or path alias of the data file that contains the fixture data
+     * @var string|bool the file path or path alias of the data file that contains the fixture data
      * to be returned by [[getData()]]. You can set this property to be false to prevent loading any data.
      */
     public $dataFile;
@@ -46,13 +45,13 @@ class EloquentFixture extends Fixture implements \IteratorAggregate, \ArrayAcces
     protected $tableName;
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function init()
     {
         parent::init();
         $this->db = Yii::$app->db;
-        if (!isset($this->modelClass)) {
+        if (! isset($this->modelClass)) {
             throw new InvalidConfigException('"modelClass" must be set.');
         }
     }
@@ -84,7 +83,7 @@ class EloquentFixture extends Fixture implements \IteratorAggregate, \ArrayAcces
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function unload()
     {
@@ -102,8 +101,8 @@ class EloquentFixture extends Fixture implements \IteratorAggregate, \ArrayAcces
      */
     public function getModel($name)
     {
-        if (!isset($this->data[$name])) {
-            return null;
+        if (! isset($this->data[$name])) {
+            return;
         }
         if (array_key_exists($name, $this->models)) {
             return $this->models[$name];
@@ -139,7 +138,7 @@ class EloquentFixture extends Fixture implements \IteratorAggregate, \ArrayAcces
         }
         $dataFile = Yii::getAlias($this->dataFile);
         if (is_file($dataFile)) {
-            return require($dataFile);
+            return require $dataFile;
         } else {
             throw new InvalidConfigException("Fixture data file does not exist: {$this->dataFile}");
         }
@@ -152,12 +151,11 @@ class EloquentFixture extends Fixture implements \IteratorAggregate, \ArrayAcces
     protected function resetTable()
     {
         $this->db->table($this->getTableName())->truncate();
-
     }
 
     protected function getTableName()
     {
-        if($this->tableName != null){
+        if ($this->tableName != null) {
             return $this->tableName;
         }
 
@@ -167,5 +165,4 @@ class EloquentFixture extends Fixture implements \IteratorAggregate, \ArrayAcces
 
         return $tableName;
     }
-
 }
