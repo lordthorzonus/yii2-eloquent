@@ -21,7 +21,7 @@ abstract class TestCase extends \PHPUnit_Extensions_Database_TestCase
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getConnection()
     {
@@ -35,15 +35,15 @@ abstract class TestCase extends \PHPUnit_Extensions_Database_TestCase
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getDataSet()
     {
-        return $this->createXMLDataSet(dirname(__FILE__)."/_files/schema.xml");
+        return $this->createXMLDataSet(dirname(__FILE__) . '/_files/schema.xml');
     }
 
     /**
-     * Mocks an Yii web application
+     * Mocks an Yii web application.
      *
      * @param array $config
      * @param string $appClass
@@ -57,15 +57,15 @@ abstract class TestCase extends \PHPUnit_Extensions_Database_TestCase
             'components' => [
                 'request' => [
                     'cookieValidationKey' => 'iAmASecretKey',
-                    'scriptFile' => __DIR__ .'/index.php',
+                    'scriptFile' => __DIR__ . '/index.php',
                     'scriptUrl' => '/index.php',
                 ],
-            ]
+            ],
         ], $config));
     }
 
     /**
-     * Mocks an Yii console application
+     * Mocks an Yii console application.
      * @param array $config
      * @param string $appClass
      */
@@ -74,14 +74,12 @@ abstract class TestCase extends \PHPUnit_Extensions_Database_TestCase
         new $appClass(ArrayHelper::merge([
             'id' => 'testapp',
             'basePath' => __DIR__,
-            'vendorPath' => dirname(dirname(__DIR__)) . '/vendor'
+            'vendorPath' => dirname(dirname(__DIR__)) . '/vendor',
         ], $config));
     }
 
-
-
     /**
-     * Destroys application in Yii::$app
+     * Destroys application in Yii::$app.
      */
     protected function destroyApplication()
     {

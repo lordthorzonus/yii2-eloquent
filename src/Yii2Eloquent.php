@@ -1,8 +1,6 @@
 <?php
 
-
 namespace leinonen\Yii2Eloquent;
-
 
 use Illuminate\Container\Container;
 use Illuminate\Database\Capsule\Manager;
@@ -58,7 +56,7 @@ class Yii2Eloquent extends Component implements BootstrapInterface
     private $capsule;
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function bootstrap($app)
     {
@@ -81,7 +79,5 @@ class Yii2Eloquent extends Component implements BootstrapInterface
         $this->capsule->bootEloquent();
 
         $app->set('db', $this->capsule);
-
     }
-
 }
