@@ -2,7 +2,7 @@
 
 namespace leinonen\Yii2Eloquent\Tests\Helpers;
 
-use Illuminate\Database\Eloquent\Model;
+use leinonen\Yii2Eloquent\Eloquent\Model;
 
 class Order extends Model
 {
@@ -19,4 +19,15 @@ class Order extends Model
      * @var array
      */
     protected $fillable = ['name'];
+
+    /**
+     * {@inheritdoc}
+     */
+    public function rules()
+    {
+        return [
+            ['address', 'required'],
+            ['address', 'string', 'min' => 3],
+        ];
+    }
 }

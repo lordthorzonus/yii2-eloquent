@@ -7,6 +7,7 @@ A drop in Laravels Eloquent and Illuminate/Database implementation for Yii2
 - [x] Working extension (Still need to check Eloquent events and pagination)
 - [x] Migrations
 - [x] Fixtures
+- [ ] Yii style model validation for Eloquent models
 - [ ] Model factories for use with testing instead of Fixtures?
 - [ ] Other Laravel test helpers for Eloquent models?
 - [ ] Adapter for Yii::$app->db? Cause it's confusing to use it now in IDE with autocompletion
