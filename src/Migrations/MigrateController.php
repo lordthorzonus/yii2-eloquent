@@ -1,6 +1,6 @@
 <?php
 
-namespace leinonen\Yii2Eloquent;
+namespace leinonen\Yii2Eloquent\Migrations;
 
 use Illuminate\Database\Capsule\Manager;
 use Illuminate\Database\Schema\Blueprint;

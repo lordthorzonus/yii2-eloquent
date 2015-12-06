@@ -3,7 +3,7 @@
 namespace leinonen\Yii2Eloquent\Tests\Helpers;
 
 use Illuminate\Database\Capsule\Manager;
-use leinonen\Yii2Eloquent\MigrateController;
+use leinonen\Yii2Eloquent\Migrations\MigrateController;
 use Yii;
 use yii\helpers\FileHelper;
 

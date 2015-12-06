@@ -2,7 +2,7 @@
 
 namespace leinonen\Yii2Eloquent\Tests\Helpers;
 
-use leinonen\Yii2Eloquent\MigrateController;
+use leinonen\Yii2Eloquent\Migrations\MigrateController;
 
 /**
  * MigrateController that writes output via echo instead of using output stream. Allows buffering and checking buffer for tests.
