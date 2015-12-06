@@ -2,6 +2,7 @@
 
 namespace leinonen\Yii2Eloquent\Tests;
 
+use leinonen\Yii2Eloquent\Yii2Eloquent;
 use PDO;
 use yii\di\Container;
 use yii\helpers\ArrayHelper;
@@ -9,8 +10,22 @@ use Yii;
 
 abstract class TestCase extends \PHPUnit_Extensions_Database_TestCase
 {
+    private $databaseConfig;
+
     public function setUp()
     {
+        $this->databaseConfig = [
+            'class' => Yii2Eloquent::class,
+            'driver' => getenv('DB_DRIVER'),
+            'database' => getenv('DB_NAME'),
+            'prefix' => '',
+            'host' => getenv('DB_HOST'),
+            'username' => getenv('DB_USERNAME'),
+            'password' => getenv('DB_PASSWORD'),
+            'charset' => 'utf8',
+            'collation' => 'utf8_unicode_ci',
+        ];
+
         //Don't setup the parent so we can control the database with Illuminates schema builder
     }
 
@@ -54,12 +69,14 @@ abstract class TestCase extends \PHPUnit_Extensions_Database_TestCase
             'id' => 'testapp',
             'basePath' => __DIR__,
             'vendorPath' => dirname(__DIR__) . '/vendor',
+            'bootstrap' => ['db'],
             'components' => [
                 'request' => [
                     'cookieValidationKey' => 'iAmASecretKey',
                     'scriptFile' => __DIR__ . '/index.php',
                     'scriptUrl' => '/index.php',
                 ],
+                'db' => $this->databaseConfig,
             ],
         ], $config));
     }
@@ -75,6 +92,10 @@ abstract class TestCase extends \PHPUnit_Extensions_Database_TestCase
             'id' => 'testapp',
             'basePath' => __DIR__,
             'vendorPath' => dirname(dirname(__DIR__)) . '/vendor',
+            'bootstrap' => ['db'],
+            'components' => [
+                'db' => $this->databaseConfig,
+            ]
         ], $config));
     }
 

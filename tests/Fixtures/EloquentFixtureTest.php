@@ -24,26 +24,8 @@ class EloquentFixtureTest extends TestCase
 
     public function setUp()
     {
-        $databaseConfig = [
-            'bootstrap' => ['db'],
-            'components' => [
-                'db' => [
-                    'class'     => Yii2Eloquent::class,
-                    'driver'    => getenv('DB_DRIVER'),
-                    'database'  => getenv('DB_NAME'),
-                    'prefix'    => '',
-                    'host'      => getenv('DB_HOST'),
-                    'username'  => getenv('DB_USERNAME'),
-                    'password'  => getenv('DB_PASSWORD'),
-                    'charset'   => 'utf8',
-                    'collation' => 'utf8_unicode_ci',
-
-                ],
-            ],
-        ];
-
-        $this->mockWebApplication($databaseConfig);
-
+        parent::setUp();
+        $this->mockWebApplication();
         $this->db = Yii::$app->db;
         $this->db->schema()->dropIfExists('order');
         $this->db->schema()->create('order', function(Blueprint $table){
@@ -58,7 +40,6 @@ class EloquentFixtureTest extends TestCase
 
     public function tearDown()
     {
-        $this->db->schema()->dropIfExists('order');
         parent::tearDown();
     }
 
