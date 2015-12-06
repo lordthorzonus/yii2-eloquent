@@ -19,7 +19,7 @@ class ModelTest extends TestCase
         Manager::schema()->dropIfExists('order');
         Manager::schema()->create('order', function(Blueprint $table){
             $table->increments('id');
-            $table->string('name')->unique();
+            $table->string('address')->unique();
             $table->timestamps();
         });
     }
@@ -28,7 +28,7 @@ class ModelTest extends TestCase
     public function it_is_validatable_as_basic_yii_model_should_be()
     {
         $order = new Order();
-        $this->assertFalse($order->validate());
+       $this->assertFalse($order->validate());
 
         $order->address = "Test address";
         $this->assertTrue($order->validate());

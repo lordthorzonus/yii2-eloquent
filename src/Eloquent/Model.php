@@ -4,18 +4,14 @@
 namespace leinonen\Yii2Eloquent\Eloquent;
 
 
-use ArrayObject;
+
 use Illuminate\Database\Eloquent\Model as Eloquent;
 use ReflectionClass;
-use yii\base\InvalidConfigException;
-use yii\base\InvalidParamException;
 use yii\helpers\Inflector;
-use yii\validators\RequiredValidator;
-use yii\validators\Validator;
+
 
 class Model extends Eloquent
 {
-    use ValidationTrait;
 
     /**
      * The name of the default scenario.
@@ -32,6 +28,22 @@ class Model extends Eloquent
      * @event Event an event raised at the end of [[validate()]]
      */
     const EVENT_AFTER_VALIDATE = 'afterValidate';
+
+    /**
+     * @see \yii\base\Model::rules()
+     */
+    public function rules()
+    {
+        return [];
+    }
+
+    /**
+     * @see \yii\base\Model::scenarios()
+     */
+    public function scenarios()
+    {
+        return [];
+    }
 
     /**
      * Returns the form name that this model class should use.
@@ -61,18 +73,6 @@ class Model extends Eloquent
     public function attributes()
     {
         return $this->getConnection()->getSchemaBuilder()->getColumnListing($this->getTable());
-    }
-
-    /**
-     * Returns a value indicating whether the record has an attribute with the specified name.
-     *
-     * @param string $name the name of the attribute
-     *
-     * @return boolean whether the record has an attribute with the specified name.
-     */
-    public function hasAttribute($name)
-    {
-        return array_key_exists($name, $this->attributes);
     }
 
     /**
@@ -166,5 +166,51 @@ class Model extends Eloquent
         return $values;
     }
 
+    /**
+     * This method is invoked before validation starts.
+     * The default implementation raises a `beforeValidate` event.
+     * You may override this method to do preliminary checks before validation.
+     * Make sure the parent implementation is invoked so that the event can be raised.
+     * @return boolean whether the validation should be executed. Defaults to true.
+     * If false is returned, the validation will stop and the model is considered invalid.
+     */
+    public function beforeValidate()
+    {
+        $this->fireModelEvent(self::EVENT_BEFORE_VALIDATE);
+    }
+
+    /**
+     * This method is invoked after validation ends.
+     * The default implementation raises an `afterValidate` event.
+     * You may override this method to do postprocessing after validation.
+     * Make sure the parent implementation is invoked so that the event can be raised.
+     */
+    public function afterValidate()
+    {
+        $this->fireModelEvent(self::EVENT_AFTER_VALIDATE);
+    }
+
+    /**
+     * Delecates the model validation to base yii objects
+     * @see \yii\base\Model::validate()
+     * @param null $attributeNames
+     * @param bool|true $clearOnError
+     *
+     * @return bool
+     */
+    public function validate($attributeNames = null, $clearOnError = true)
+    {
+        $this->beforeValidate();
+
+        $properties = $this->getAttributes();
+        $dummyModel = new YiiDynamicBaseModelAdapter($properties);
+        $dummyModel->setRules($this->rules());
+        $dummyModel->setScenarios($this->scenarios());
+        $validation = $dummyModel->validate($attributeNames, $clearOnError);
+
+        $this->afterValidate();
+
+        return $validation;
+    }
 
 }
