@@ -1,8 +1,6 @@
 <?php
 
-
 namespace leinonen\Yii2Eloquent\Tests\Helpers;
-
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -21,5 +19,4 @@ class Order extends Model
      * @var array
      */
     protected $fillable = ['name'];
-
 }

@@ -1,6 +1,5 @@
 <?php
 
-
 namespace leinonen\Yii2Eloquent\Tests\Helpers;
 
 use leinonen\Yii2Eloquent\MigrateController;
@@ -11,7 +10,7 @@ use leinonen\Yii2Eloquent\MigrateController;
 class BufferableMigrateController extends MigrateController
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function stdout($string)
     {

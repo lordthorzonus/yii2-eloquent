@@ -31,8 +31,8 @@ class Yii2EloquentTest extends TestCase
                     'charset'   => 'utf8',
                     'collation' => 'utf8_unicode_ci',
 
-                ]
-            ]
+                ],
+            ],
         ];
 
         $this->mockWebApplication($databaseConfig);
@@ -57,7 +57,7 @@ class Yii2EloquentTest extends TestCase
     /** @test */
     public function the_schema_builder_is_usable()
     {
-        $this->db->schema()->create('user', function($table){
+        $this->db->schema()->create('user', function ($table) {
             $table->increments('id');
             $table->string('email')->unique();
             $table->timestamps();
@@ -69,7 +69,7 @@ class Yii2EloquentTest extends TestCase
             'id',
             'email',
             'created_at',
-            'updated_at'
+            'updated_at',
         ], $tableMetaData->getColumns());
 
         $this->db->schema()->dropIfExists('user');
@@ -78,33 +78,33 @@ class Yii2EloquentTest extends TestCase
         $this->setExpectedException(Exception::class);
         $this->getConnection()->createQueryTable('user', 'SELECT * FROM user')->getTableMetaData();
     }
-    
+
     /** @test */
     public function eloquent_works_as_expected()
     {
         $this->createAndSeedOrdersTable();
-        $this->assertCount(2,Order::all());
+        $this->assertCount(2, Order::all());
 
         $model = Order::where('name', 'Test address')->firstOrFail();
         $this->assertEquals('Test address', $model->name);
 
         Order::create(['name' => 'New name']);
-        $this->assertCount(3,Order::all());
+        $this->assertCount(3, Order::all());
         $model = Order::where('name', 'New name')->firstOrFail();
         $this->assertEquals('New name', $model->name);
     }
 
     /**
-     * Creates and seeds the order table
+     * Creates and seeds the order table.
      */
     protected function createAndSeedOrdersTable()
     {
-        /**
+        /*
          * @var $db Manager
          */
         $this->db = Yii::$app->db;
 
-        $this->db->schema()->create('order', function($table){
+        $this->db->schema()->create('order', function ($table) {
             $table->increments('id');
             $table->string('name')->unique();
             $table->timestamps();
@@ -113,10 +113,4 @@ class Yii2EloquentTest extends TestCase
         Order::create(['name' => 'Test address']);
         Order::create(['name' => 'Another test Address']);
     }
-
-
-
-
-    
-    
 }

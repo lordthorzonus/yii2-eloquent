@@ -1,8 +1,6 @@
 <?php
 
-
 namespace leinonen\Yii2Eloquent;
-
 
 use Illuminate\Database\Capsule\Manager;
 use yii\base\Module;
@@ -18,7 +16,7 @@ class MigrateController extends BaseMigrateController
     public $migrationTable = 'migration';
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public $templateFile = __DIR__ . '/MigrationTemplates/MigrationTemplate.php';
 
@@ -28,7 +26,7 @@ class MigrateController extends BaseMigrateController
     protected $db;
 
     /**
-     * Ïnitiates a new MigrateController
+     * Ïnitiates a new MigrateController.
      *
      * @param string $id
      * @param Module $module
@@ -43,7 +41,7 @@ class MigrateController extends BaseMigrateController
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function options($actionID)
     {
@@ -56,17 +54,17 @@ class MigrateController extends BaseMigrateController
     /**
      * Returns the migration history.
      *
-     * @param integer $limit the maximum number of records in the history to be returned. `null` for "no limit".
+     * @param int $limit the maximum number of records in the history to be returned. `null` for "no limit".
      *
      * @return array the migration history
      */
     protected function getMigrationHistory($limit)
     {
-        if(!$this->db->schema()->hasTable($this->migrationTable)){
+        if (! $this->db->schema()->hasTable($this->migrationTable)) {
             $this->createMigrationHistoryTable();
         }
 
-        $rows= $this->db->table($this->migrationTable)
+        $rows = $this->db->table($this->migrationTable)
             ->select(['version', 'apply_time'])
             ->orderByRaw('apply_time DESC, version DESC')
             ->limit($limit)
@@ -87,8 +85,8 @@ class MigrateController extends BaseMigrateController
         $tableName = $this->migrationTable;
         $this->stdout("Creating migration history table \"$tableName\"...", Console::FG_YELLOW);
 
-        $this->db->schema()->create($this->migrationTable, function($table){
-            /**
+        $this->db->schema()->create($this->migrationTable, function ($table) {
+            /*
              * @var $table \Illuminate\Database\Schema\Blueprint
              */
             $table->string('version', 180);
@@ -110,7 +108,7 @@ class MigrateController extends BaseMigrateController
     {
         $this->db->table($this->migrationTable)->insert([
             'version' => $version,
-            'apply_time' => time()
+            'apply_time' => time(),
         ]);
     }
 

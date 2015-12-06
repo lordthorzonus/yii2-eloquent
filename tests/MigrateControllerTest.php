@@ -1,17 +1,11 @@
 <?php
 
-
 namespace leinonen\Yii2Eloquent\Tests;
 
-
 use Illuminate\Database\Capsule\Manager;
-use leinonen\Yii2Eloquent\MigrateController;
 use leinonen\Yii2Eloquent\Tests\Helpers\BufferableMigrateController;
 use leinonen\Yii2Eloquent\Tests\Helpers\MigrateControllerTestTrait;
 use leinonen\Yii2Eloquent\Yii2Eloquent;
-use Yii;
-use yii\helpers\FileHelper;
-
 
 class MigrateControllerTest extends TestCase
 {
@@ -33,15 +27,14 @@ class MigrateControllerTest extends TestCase
                     'charset' => 'utf8',
                     'collation' => 'utf8_unicode_ci',
 
-                ]
-            ]
+                ],
+            ],
         ]);
 
         $this->migrateControllerClass = BufferableMigrateController::class;
         $this->migrationPath = dirname(__DIR__) . '/tests/migrations';
         $this->setUpMigrationPath();
         parent::setUp();
-
     }
 
     public function tearDown()
@@ -50,6 +43,4 @@ class MigrateControllerTest extends TestCase
         $this->tearDownMigrationPath();
         parent::tearDown();
     }
-
-
 }
