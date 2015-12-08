@@ -29,7 +29,7 @@ abstract class Model extends Eloquent
     const EVENT_AFTER_VALIDATE = 'afterValidate';
 
     /**
-     * {@inheritdoc].
+     * {@inheritdoc}.
      */
     public function __construct(array $attributes = [])
     {
