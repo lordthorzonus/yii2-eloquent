@@ -41,7 +41,7 @@ class ModelTest extends TestCase
     {
         ob_start();
         ob_implicit_flush(false);
-        $form = new ActiveForm(['action' => '/something']);
+        $form = new ActiveForm(['action' => '/something', 'enableClientValidation' => false,]);
         $order = new Order();
         $order->address= 'Test';
 
