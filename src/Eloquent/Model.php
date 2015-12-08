@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Model as Eloquent;
  *
  * @package leinonen\Yii2Eloquent\Eloquent
  */
-class Model extends Eloquent
+abstract class Model extends Eloquent
 {
     use EloquentYiiModelAdapterTrait;
 

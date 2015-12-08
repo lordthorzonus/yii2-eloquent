@@ -4,6 +4,7 @@ namespace leinonen\Yii2Eloquent\Tests;
 
 use Exception;
 use Illuminate\Database\Capsule\Manager;
+use Illuminate\Database\Schema\Blueprint;
 use leinonen\Yii2Eloquent\Tests\Helpers\Order;
 use Yii;
 
@@ -38,7 +39,7 @@ class Yii2EloquentTest extends TestCase
     /** @test */
     public function the_schema_builder_is_usable()
     {
-        $this->db->schema()->create('user', function ($table) {
+        $this->db->schema()->create('user', function (Blueprint $table) {
             $table->increments('id');
             $table->string('email')->unique();
             $table->timestamps();
