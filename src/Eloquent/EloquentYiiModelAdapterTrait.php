@@ -1,8 +1,6 @@
 <?php
 
-
 namespace leinonen\Yii2Eloquent\Eloquent;
-
 
 use ReflectionClass;
 use yii\helpers\Inflector;
@@ -10,8 +8,6 @@ use yii\helpers\Inflector;
 /**
  * Class EloquentYiiModelAdapterTrait
  * Trait that delegates all method calls that yii widgets / validation makes to the dummy DynamicModel.
- *
- * @package leinonen\Yii2Eloquent\Eloquent
  */
 trait EloquentYiiModelAdapterTrait
 {
@@ -19,22 +15,27 @@ trait EloquentYiiModelAdapterTrait
      * @see \yii\base\model::attributeLabels()
      */
     abstract public function attributeLabels();
+
     /**
      * @see \yii\base\model::attributeHints()
      */
     abstract public function attributeHints();
+
     /**
      * @see \yii\base\model::beforeValidate()
      */
     abstract public function beforeValidate();
+
     /**
      * @see \yii\base\model::afterValidate()
      */
     abstract public function afterValidate();
+
     /**
      * @see \yii\base\model::scenarios()
      */
     abstract public function scenarios();
+
     /**
      * @see \yii\base\model::rules()
      */
@@ -147,4 +148,3 @@ trait EloquentYiiModelAdapterTrait
         return $reflector->getShortName();
     }
 }
-
