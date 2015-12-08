@@ -8,8 +8,6 @@ use Illuminate\Database\Eloquent\Model as Eloquent;
  * Class Model
  * An alternative Eloquent base class that brings some Yii functionality to Eloquent.
  * Including validation and the ability to feed it to Yii widgets.
- *
- * @package leinonen\Yii2Eloquent\Eloquent
  */
 abstract class Model extends Eloquent
 {
@@ -31,7 +29,7 @@ abstract class Model extends Eloquent
     const EVENT_AFTER_VALIDATE = 'afterValidate';
 
     /**
-     * {@inheritdoc]
+     * {@inheritdoc}.
      */
     public function __construct(array $attributes = [])
     {
@@ -122,5 +120,4 @@ abstract class Model extends Eloquent
 
         return $validation;
     }
-
 }

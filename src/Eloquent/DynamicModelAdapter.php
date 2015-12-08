@@ -6,9 +6,7 @@ use yii\base\DynamicModel;
 
 /**
  * Class DynamicModelAdapter
- * Little Wrapper around the DynamicModel class
- *
- * @package leinonen\Yii2Eloquent\Eloquent
+ * Little Wrapper around the DynamicModel class.
  */
 class DynamicModelAdapter extends DynamicModel
 {
@@ -47,7 +45,7 @@ class DynamicModelAdapter extends DynamicModel
     {
         $scenarios = parent::scenarios();
 
-        if(!empty($definedScenarios = $this->scenarios)){
+        if (! empty($definedScenarios = $this->scenarios)) {
             foreach ($definedScenarios as $definedScenarioName => $attributes) {
                 $scenarios[ $definedScenarioName ] = $attributes;
             }
@@ -65,5 +63,4 @@ class DynamicModelAdapter extends DynamicModel
     {
         $this->scenarios = $scenarios;
     }
-
 }

@@ -57,7 +57,7 @@ class EloquentFixture extends Fixture implements \IteratorAggregate, \ArrayAcces
     }
 
     /**
-     * {@inheritdoc]
+     * {@inheritdoc}
      */
     public function load()
     {
@@ -118,7 +118,7 @@ class EloquentFixture extends Fixture implements \IteratorAggregate, \ArrayAcces
     }
 
     /**
-     * Returns the fixture data
+     * Returns the fixture data.
      * @see \yii\test\BaseActiveFixture::getData()
      */
     protected function getData()
@@ -127,7 +127,7 @@ class EloquentFixture extends Fixture implements \IteratorAggregate, \ArrayAcces
             $class = new \ReflectionClass($this);
             $dataFile = dirname($class->getFileName()) . '/data/' . $this->getTableName() . '.php';
         } else {
-           $dataFile = Yii::getAlias($this->dataFile);
+            $dataFile = Yii::getAlias($this->dataFile);
         }
 
         return is_file($dataFile) ? require($dataFile) : [];
@@ -142,7 +142,7 @@ class EloquentFixture extends Fixture implements \IteratorAggregate, \ArrayAcces
     }
 
     /**
-     * Returns the table name used by the defined model in $modelClass
+     * Returns the table name used by the defined model in $modelClass.
      *
      * @return string
      */
