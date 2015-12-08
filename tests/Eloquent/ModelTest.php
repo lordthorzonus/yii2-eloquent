@@ -40,10 +40,10 @@ class ModelTest extends TestCase
     public function it_can_be_fed_to_active_form_normally()
     {
         ob_start();
+        ob_implicit_flush(false);
         $form = new ActiveForm(['action' => '/something']);
         $order = new Order();
         $order->address= 'Test';
-
 
         echo $form->field($order, 'address');
         $content = ob_get_clean();
@@ -51,14 +51,23 @@ class ModelTest extends TestCase
         $this->assertContains("id=\"order-address\" class=\"form-control\" name=\"Order[address]\" value=\"Test\"", $content);
         $this->assertContains("<label class=\"control-label\" for=\"order-address\">Address</label>", $content);
 
-        $secondOrder = new Order();
-        $secondOrder->validate();
+    }
 
-        echo $form->field($secondOrder, 'address');
+    /** @test */
+    public function it_gives_the_errors_to_active_form_normally()
+    {
+        ob_start();
+        ob_implicit_flush(false);
+
+        $form = new ActiveForm(['action' => '/something']);
+        $order = new Order();
+        $order->validate();
+
+        echo $form->field($order, 'address');
 
         $content = ob_get_clean();
 
-        var_dump($content); die;
+        $this->assertContains('Address cannot be blank', $content);
 
     }
 

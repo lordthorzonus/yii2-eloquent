@@ -7,25 +7,46 @@ namespace leinonen\Yii2Eloquent\Eloquent;
 use ReflectionClass;
 use yii\helpers\Inflector;
 
+/**
+ * Class EloquentYiiModelAdapterTrait
+ * Trait that delegates all method calls that yii widgets / validation makes to the dummy DynamicModel.
+ *
+ * @package leinonen\Yii2Eloquent\Eloquent
+ */
 trait EloquentYiiModelAdapterTrait
 {
-    abstract public function attributeLabels();
-
-    abstract public function attributeHints();
-
-    abstract public function beforeValidate();
-
-    abstract public function afterValidate();
-
     /**
-     * @return DynamicModelAdapter
+     * @see \yii\base\model::attributeLabels()
      */
-    abstract protected function getDummyDynamicModel();
+    abstract public function attributeLabels();
+    /**
+     * @see \yii\base\model::attributeHints()
+     */
+    abstract public function attributeHints();
+    /**
+     * @see \yii\base\model::beforeValidate()
+     */
+    abstract public function beforeValidate();
+    /**
+     * @see \yii\base\model::afterValidate()
+     */
+    abstract public function afterValidate();
+    /**
+     * @see \yii\base\model::scenarios()
+     */
+    abstract public function scenarios();
+    /**
+     * @see \yii\base\model::rules()
+     */
+    abstract public function rules();
 
     /**
-     * Returns the list of all attribute names of the record.
-     *
-     * @return array list of attribute names.
+     * @var DynamicModelAdapter
+     */
+    protected $dummyModel;
+
+    /**
+     * @see \yii\base\model::attributes()
      */
     public function attributes()
     {
@@ -33,11 +54,7 @@ trait EloquentYiiModelAdapterTrait
     }
 
     /**
-     * Returns the text label for the specified attribute.
-     * @param string $attribute the attribute name
-     * @return string the attribute label
-     * @see generateAttributeLabel()
-     * @see attributeLabels()
+     * @see \yii\base\model::getAttributeLabels()
      */
     public function getAttributeLabel($attribute)
     {
@@ -46,19 +63,16 @@ trait EloquentYiiModelAdapterTrait
         return isset($labels[$attribute]) ? $labels[$attribute] : Inflector::camel2words($attribute, true);
     }
 
+    /**
+     * @see \yii\base\model::isAttributeRequired()
+     */
     public function isAttributeRequired($attribute)
     {
-        $dummyModel = $this->getDummyDynamicModel();
-
-        return $dummyModel->isAttributeRequired($attribute);
+        return $this->dummyModel->isAttributeRequired($attribute);
     }
 
     /**
-     * Returns the text hint for the specified attribute.
-     * @param string $attribute the attribute name
-     * @return string the attribute hint
-     * @see attributeHints()
-     * @since 2.0.4
+     * @see \yii\base\model::getAttributeHint()
      */
     public function getAttributeHint($attribute)
     {
@@ -68,68 +82,63 @@ trait EloquentYiiModelAdapterTrait
     }
 
     /**
-     * @see \yii\base\Model::getFirstError()
-     *
-     * @param $attribute
-     *
-     * @return string
+     * @see \yii\base\model::getFirstError()
      */
     public function getFirstError($attribute)
     {
-        $dummyModel = $this->getDummyDynamicModel();
-        return $dummyModel->getFirstError($attribute);
+        return $this->dummyModel->getFirstError($attribute);
     }
 
+    /**
+     * @see \yii\base\model::getErrors()
+     */
+    public function getErrors($attribute = null)
+    {
+        return $this->dummyModel->getErrors($attribute);
+    }
+
+    /**
+     * @see \yii\base\model::addError()
+     */
+    public function addError($attribute, $error = '')
+    {
+        return $this->dummyModel->addError($attribute, $error);
+    }
+
+    /**
+     * @see \yii\base\model::addErrors()
+     */
+    public function addErrors(array $items)
+    {
+        return $this->dummyModel->addErrors($items);
+    }
+
+    /**
+     * @see \yii\base\model::hasErrors()
+     */
     public function hasErrors($attribute)
     {
-        $dummyModel = $this->getDummyDynamicModel();
-        return $dummyModel->hasErrors($attribute);
+        return $this->dummyModel->hasErrors($attribute);
     }
 
+    /**
+     * @see \yii\base\model::activeAttributes()
+     */
     public function activeAttributes()
     {
-        $dummyModel = $this->getDummyDynamicModel();
-        return $dummyModel->activeAttributes();
+        return $this->dummyModel->activeAttributes();
     }
 
+    /**
+     * @see \yii\base\model::getActiveValidators()
+     */
     public function getActiveValidators($attribute = null)
     {
-        $dummyModel = $this->getDummyDynamicModel();
-        return $dummyModel->getActiveValidators($attribute);
+        return $this->dummyModel->getActiveValidators($attribute);
     }
 
     /**
-     * Delecates the model validation to base yii objects.
-     * @see \yii\base\Model::validate()
-     * @param null $attributeNames
-     * @param bool|true $clearOnError
-     *
-     * @return bool
-     */
-    public function validate($attributeNames = null, $clearOnError = true)
-    {
-        $this->beforeValidate();
-
-        $dummyModel = $this->getDummyDynamicModel();
-        $validation = $dummyModel->validate($attributeNames, $clearOnError);
-
-        $this->afterValidate();
-
-        return $validation;
-    }
-
-    /**
-     * Returns the form name that this model class should use.
-     *
-     * The form name is mainly used by [[\yii\widgets\ActiveForm]] to determine how to name
-     * the input fields for the attributes in a model. If the form name is "A" and an attribute
-     * name is "b", then the corresponding input name would be "A[b]". If the form name is
-     * an empty string, then the input name would be "b".
-     *
-     * By default, this method returns the model class name (without the namespace part)
-     * as the form name. You may override it when the model is used in different forms.
-     *
-     * @return string the form name of this model class.
+     * @see \yii\base\model::formName()
      */
     public function formName()
     {

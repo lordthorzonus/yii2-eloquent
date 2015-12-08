@@ -4,6 +4,12 @@ namespace leinonen\Yii2Eloquent\Eloquent;
 
 use yii\base\DynamicModel;
 
+/**
+ * Class DynamicModelAdapter
+ * Little Wrapper around the DynamicModel class
+ *
+ * @package leinonen\Yii2Eloquent\Eloquent
+ */
 class DynamicModelAdapter extends DynamicModel
 {
     /**
@@ -41,10 +47,10 @@ class DynamicModelAdapter extends DynamicModel
     {
         $scenarios = parent::scenarios();
 
-        $definedScenarios = $this->scenarios;
-
-        foreach ($definedScenarios as $definedScenarioName => $attributes) {
-            $scenarios[ $definedScenarioName ] = $attributes;
+        if(!empty($definedScenarios = $this->scenarios)){
+            foreach ($definedScenarios as $definedScenarioName => $attributes) {
+                $scenarios[ $definedScenarioName ] = $attributes;
+            }
         }
 
         return $scenarios;

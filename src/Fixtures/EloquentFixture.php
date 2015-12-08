@@ -57,13 +57,7 @@ class EloquentFixture extends Fixture implements \IteratorAggregate, \ArrayAcces
     }
 
     /**
-     * Loads the fixture.
-     *
-     * The default implementation will first clean up the table by calling [[resetTable()]].
-     * It will then populate the table with the data returned by [[getData()]].
-     *
-     * If you override this method, you should consider calling the parent implementation
-     * so that the data returned by [[getData()]] can be populated into the table.
+     * {@inheritdoc]
      */
     public function load()
     {
@@ -93,10 +87,11 @@ class EloquentFixture extends Fixture implements \IteratorAggregate, \ArrayAcces
     }
 
     /**
-     * Returns the AR model by the specified model name.
+     * Returns the Eloquent model by the specified model name.
      * A model name is the key of the corresponding data row in [[data]].
      * @param string $name the model name.
-     * @return null|\yii\db\ActiveRecord the AR model, or null if the model cannot be found in the database
+     *
+     * @return null|\Illuminate\Database\Eloquent\Model the Eloquent model, or null if the model cannot be found in the database
      * @throws \yii\base\InvalidConfigException if [[modelClass]] is not set.
      */
     public function getModel($name)
@@ -123,36 +118,34 @@ class EloquentFixture extends Fixture implements \IteratorAggregate, \ArrayAcces
     }
 
     /**
-     * Returns the fixture data.
-     *
-     * The default implementation will try to return the fixture data by including the external file specified by [[dataFile]].
-     * The file should return the data array that will be stored in [[data]] after inserting into the database.
-     *
-     * @return array the data to be put into the database
-     * @throws InvalidConfigException if the specified data file does not exist.
+     * Returns the fixture data
+     * @see \yii\test\BaseActiveFixture::getData()
      */
     protected function getData()
     {
-        if ($this->dataFile === false || $this->dataFile === null) {
-            return [];
-        }
-        $dataFile = Yii::getAlias($this->dataFile);
-        if (is_file($dataFile)) {
-            return require $dataFile;
+        if ($this->dataFile === null) {
+            $class = new \ReflectionClass($this);
+            $dataFile = dirname($class->getFileName()) . '/data/' . $this->getTableName() . '.php';
         } else {
-            throw new InvalidConfigException("Fixture data file does not exist: {$this->dataFile}");
+           $dataFile = Yii::getAlias($this->dataFile);
         }
+
+        return is_file($dataFile) ? require($dataFile) : [];
     }
 
     /**
-     * Removes all existing data from the specified table and resets sequence number to 1 (if any).
-     * This method is called before populating fixture data into the table associated with this fixture.
+     * @see \yii\test\ActiveFixture::resetTable()
      */
     protected function resetTable()
     {
         $this->db->table($this->getTableName())->truncate();
     }
 
+    /**
+     * Returns the table name used by the defined model in $modelClass
+     *
+     * @return string
+     */
     protected function getTableName()
     {
         if ($this->tableName != null) {

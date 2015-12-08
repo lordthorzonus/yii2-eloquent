@@ -16,7 +16,7 @@ class MigrateControllerTest extends TestCase
         parent::setUp();
         $this->mockConsoleApplication();
         $this->migrateControllerClass = BufferableMigrateController::class;
-        $this->migrationPath = dirname(__DIR__) . '/tests/migrations';
+        $this->migrationPath = dirname(__DIR__) . '/_files/migrations';
         $this->setUpMigrationPath();
     }
 
