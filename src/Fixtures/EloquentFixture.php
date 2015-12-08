@@ -57,7 +57,7 @@ class EloquentFixture extends Fixture implements \IteratorAggregate, \ArrayAcces
     }
 
     /**
-     * {@inheritdoc].
+     * {@inheritdoc}
      */
     public function load()
     {
