@@ -6,7 +6,7 @@ use yii\base\DynamicModel;
 
 /**
  * Class DynamicModelAdapter
- * Little Wrapper around the DynamicModel class.
+ * Small wrapper around the DynamicModel class.
  */
 class DynamicModelAdapter extends DynamicModel
 {

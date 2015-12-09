@@ -21,21 +21,21 @@ use leinonen\Yii2Eloquent\Yii2Eloquent;
 ...
 'bootstrap' => ['db'],
 'components' => [
-  'db' => [
-    'class' => Yii2Eloquent::class,
-    'driver' => 'mysql',
-    'database' => 'yii2basic',
-    'prefix' => '',
-    'host' => 'localhost',
-    'username' => 'root',
-    'password' => 'secret',
-    'charset' => 'utf8',
-    'collation' => 'utf8_unicode_ci',
-  ];
+    'db' => [
+        'class' => Yii2Eloquent::class,
+        'driver' => 'mysql',
+        'database' => 'yii2basic',
+        'prefix' => '',
+        'host' => 'localhost',
+        'username' => 'root',
+        'password' => 'secret',
+        'charset' => 'utf8',
+        'collation' => 'utf8_unicode_ci',
+    ];
 ```
 
 ## Usage: ##
-Like said, by default the package overrides Yiis database component. So one you can access `Illuminate\Database\Capsule\Manager` like this:
+Like said, by default the package overrides Yii's database component. So one you can access `Illuminate\Database\Capsule\Manager` like this:
 
 ```php
 use Illuminate\Database\Schema\Blueprint;
@@ -95,15 +95,17 @@ class Order extends Model
 }
 ```
 
+The package also provides a simple trait to make your Eloquent user model compatible with Yii's IdentityInterface. Just `use leinonen\Yii2Eloquent\Eloquent\AuthenticatableTrait;`
+
 ## Migrations ##
 If you want to use Yiis basic migration commands you have overwrite the default migration controller in the console app config. 
 ```php
 use leinonen\Yii2Eloquent\Migrations\MigrateController;
 
 'controllerMap' => [
-  'migrate' => [
-    'class' => MigrateController::class,
-  ],
+      'migrate' => [
+            'class' => MigrateController::class,
+      ],
 ],
 ```
 Then all the commands `php yii migrate/create` etc. will work as expected. Note that you have to use the `Capsule`in migrations instead of refering to Yiis base migration class:
@@ -114,17 +116,17 @@ use yii\db\MigrationInterface;
 
 class myMigration implements MigrationInterface
 {
-  public function up()
-  {
-    Capsule::schema()->create('my_table', function($table){
-      $table->increments('id');
-    });
-  }
-  
-  public function down()
-  {
-    Capsule::schema()->dropIfExists('my_table');
-  }
+    public function up()
+    {
+        Capsule::schema()->create('my_table', function($table){
+            $table->increments('id');
+        });
+    }
+      
+    public function down()
+    {
+        Capsule::schema()->dropIfExists('my_table');
+    }
 }
 ```
 
