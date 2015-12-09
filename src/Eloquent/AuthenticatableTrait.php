@@ -2,6 +2,8 @@
 
 namespace leinonen\Yii2Eloquent\Eloquent;
 
+use yii\base\NotSupportedException;
+
 trait AuthenticatableTrait
 {
     /**
