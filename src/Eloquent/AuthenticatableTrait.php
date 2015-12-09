@@ -1,8 +1,6 @@
 <?php
 
-
 namespace leinonen\Yii2Eloquent\Eloquent;
-
 
 trait AuthenticatableTrait
 {
