@@ -14,7 +14,15 @@ A drop in Laravels Eloquent and Illuminate/Database implementation for Yii2
 - [ ] Adapter for Yii::$app->db? It's confusing to use it now in IDE with autocompletion and creating an own Yii base class is too much work
 - [ ] Better Docs
 
-## Configuration: ##
+## Installation
+Require this package, with [Composer](https://getcomposer.org/), in the root directory of your project.
+
+```bash
+composer require leinonen/yii2-eloquent
+```
+
+
+### Configuration: 
 To configure the package just override and bootstrap your Yii db component in the application config. 
 ```php
 use leinonen\Yii2Eloquent\Yii2Eloquent;
